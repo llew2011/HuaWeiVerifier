@@ -29,20 +29,6 @@ import java.util.Map;
 
 public class LoadedApkHuaWei {
 
-
-    public static void hookHuaWeiVerifier(Context baseContext) {
-        try {
-            if (null != baseContext && "ContextImpl".equals(baseContext.getClass().getSimpleName())) {
-                IMPL.verifier(baseContext);
-            } else {
-                Log.w(LoadedApkHuaWei.class.getSimpleName(), "baseContext is't instance of ContextImpl");
-            }
-        } catch (Throwable ignored) {
-            // ignore it
-        }
-    }
-
-
     private static final HuaWeiVerifier IMPL;
 
     static {
@@ -53,6 +39,18 @@ public class LoadedApkHuaWei {
             IMPL = new V24VerifierImpl();
         } else {
             IMPL = new BaseVerifierImpl();
+        }
+    }
+
+    public static void hookHuaWeiVerifier(Context baseContext) {
+        try {
+            if (null != baseContext && "ContextImpl".equals(baseContext.getClass().getSimpleName())) {
+                IMPL.verifier(baseContext);
+            } else {
+                Log.w(LoadedApkHuaWei.class.getSimpleName(), "baseContext is't instance of ContextImpl");
+            }
+        } catch (Throwable ignored) {
+            // ignore it
         }
     }
 

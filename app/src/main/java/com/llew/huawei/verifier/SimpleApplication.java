@@ -14,6 +14,6 @@ public class SimpleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        // LoadedApkHuaWei.hookHuaWeiVerifier(getBaseContext());
+        LoadedApkHuaWei.hookHuaWeiVerifier(getBaseContext());
     }
 }

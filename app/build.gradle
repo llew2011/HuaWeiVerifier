@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.llew.huawei.verifier"
+        applicationId "com.llew.huawei.verifier.demo"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1

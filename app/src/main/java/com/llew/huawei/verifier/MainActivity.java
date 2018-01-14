@@ -21,11 +21,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(com.llew.huawei.verifier.demo.R.layout.activity_main);
     }
 
     public void register(View view) {
-        LoadedApkHuaWei.hookHuaWeiVerifier(getBaseContext());
         for (int i = 1; i <= 1000; i++) {
             IntentFilter filter = new IntentFilter();
             filter.addAction("test index : " + i);
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onReceive(Context context, Intent intent) {
                 }
             }, filter);
-            Log.e(getClass().getName(), "当前注册了：" + i + " 个广播接收器");
+            Log.e(getClass().getName(), "index：" + i);
         }
     }
 }

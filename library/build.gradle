@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 
+
 android {
     compileSdkVersion 26
 
@@ -24,4 +25,25 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.llew:reflect:1.0.1'
+}
+
+
+def webUrl = 'https://github.com/llew2011/HuaWeiVerifier'
+def gitUrl = 'https://github.com/llew2011/HuaWeiVerifier.git'
+def orgName = 'llew'
+def verName = '1.0.0'
+def libName = 'verifier'
+def grpName = 'com.llew.huawei'
+def libDesc = 'Fix only the crash of Register too manager Broadcast Receivers on Huawei\'s mobile phone.'
+
+
+apply plugin: 'com.novoda.bintray-release'
+
+publish {
+    userOrg         = orgName
+    groupId         = grpName
+    artifactId      = libName
+    publishVersion  = verName
+    desc            = libDesc
+    website         = webUrl
 }

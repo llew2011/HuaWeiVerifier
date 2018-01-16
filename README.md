@@ -5,7 +5,7 @@ Fix only the crash of `Register too manager Broadcast Receivers` on Huawei's mob
 ```gradle
 dependencies {
     // add dependencies
-    implementation 'com.llew.huawei:verifier:1.0.2'
+    implementation 'com.llew.huawei:verifier:1.0.3'
 }
 ```
 
@@ -15,7 +15,7 @@ public class SimpleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        LoadedApkHuaWei.hookHuaWeiVerifier(getBaseContext());
+        LoadedApkHuaWei.hookHuaWeiVerifier(this);
     }
 }
 ```

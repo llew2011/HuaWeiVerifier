@@ -1,5 +1,6 @@
 package com.llew.huawei.verifier;
 
+import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
@@ -42,12 +43,12 @@ public class LoadedApkHuaWei {
         }
     }
 
-    public static void hookHuaWeiVerifier(Context baseContext) {
+    public static void hookHuaWeiVerifier(Application application) {
         try {
-            if (null != baseContext && "ContextImpl".equals(baseContext.getClass().getSimpleName())) {
-                IMPL.verifier(baseContext);
+            if (null != application) {
+                IMPL.verifier(application.getBaseContext());
             } else {
-                Log.w(LoadedApkHuaWei.class.getSimpleName(), "baseContext is't instance of ContextImpl");
+                Log.w(LoadedApkHuaWei.class.getSimpleName(), "application is null ！！！");
             }
         } catch (Throwable ignored) {
             // ignore it

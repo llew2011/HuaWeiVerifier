@@ -1,5 +1,5 @@
 ## HuaWeiVerifier
-Fix only the crash of `Register too manager Broadcast Receivers` on Huawei's mobile phone.
+Fix only the crash of `Register too many Broadcast Receivers` on Huawei's mobile phone.
 
 ## How to usage
 ```gradle

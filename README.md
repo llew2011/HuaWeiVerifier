@@ -5,7 +5,7 @@ Fix only the crash of `Register too many Broadcast Receivers` on Huawei's mobile
 ```gradle
 dependencies {
     // add dependencies
-    implementation 'com.llew.huawei:verifier:1.0.3'
+    implementation 'com.llew.huawei:verifier:1.0.4'
 }
 ```
 

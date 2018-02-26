@@ -94,29 +94,45 @@ public class LoadedApkHuaWei {
 
         @Override
         public void verifier(Context baseContext) throws Throwable {
-            Object receiverResourceObject = getWhiteListObject(baseContext, WHITE_LIST);
-            if (receiverResourceObject instanceof String[]) {
-                String[] whiteList = (String[]) receiverResourceObject;
+            Object whiteListObject = getWhiteListObject(baseContext, WHITE_LIST);
+            if (whiteListObject instanceof String[]) {
+                String[] whiteList = (String[]) whiteListObject;
                 List<String> newWhiteList = new ArrayList<>();
                 newWhiteList.add(baseContext.getPackageName());
                 Collections.addAll(newWhiteList, whiteList);
-                FieldUtils.writeField(receiverResourceObject, WHITE_LIST, newWhiteList.toArray(new String[newWhiteList.size()]));
+                FieldUtils.writeField(whiteListObject, WHITE_LIST, newWhiteList.toArray(new String[newWhiteList.size()]));
+            } else {
+                Object receiverResourceObject = getReceiverResourceObject(baseContext);
+                if (null != receiverResourceObject) {
+                    FieldUtils.writeField(receiverResourceObject, "mResourceConfig", null);
+                }
             }
         }
 
-        Object getWhiteListObject(Context baseContext, String whiteList) throws Throwable {
-            Field receiverResourceField = FieldUtils.getDeclaredField("android.app.LoadedApk", "mReceiverResource", true);
-            if (null != receiverResourceField) {
-                Field packageInfoField = FieldUtils.getDeclaredField("android.app.ContextImpl", "mPackageInfo", true);
-                if (null != packageInfoField) {
-                    Object packageInfoObject = FieldUtils.readField(packageInfoField, baseContext);
-                    if (null != packageInfoObject) {
-                        Object receivedResource = FieldUtils.readField(receiverResourceField, packageInfoObject, true);
-                        if (null != receivedResource) {
-                            return FieldUtils.readField(receivedResource, whiteList);
+        Object getWhiteListObject(Context baseContext, String whiteList) {
+            try {
+                Object receiverResourceObject = getReceiverResourceObject(baseContext);
+                if (null != receiverResourceObject) {
+                    return FieldUtils.readField(receiverResourceObject, whiteList);
+                }
+            } catch (Throwable ignored) {
+            }
+            return null;
+        }
+
+        private Object getReceiverResourceObject(Context baseContext) {
+            try {
+                Field receiverResourceField = FieldUtils.getDeclaredField("android.app.LoadedApk", "mReceiverResource", true);
+                if (null != receiverResourceField) {
+                    Field packageInfoField = FieldUtils.getDeclaredField("android.app.ContextImpl", "mPackageInfo", true);
+                    if (null != packageInfoField) {
+                        Object packageInfoObject = FieldUtils.readField(packageInfoField, baseContext);
+                        if (null != packageInfoObject) {
+                            return FieldUtils.readField(receiverResourceField, packageInfoObject, true);
                         }
                     }
                 }
+            } catch (Throwable ignored) {
             }
             return null;
         }

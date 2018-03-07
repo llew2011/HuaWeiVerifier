@@ -94,15 +94,15 @@ public class LoadedApkHuaWei {
 
         @Override
         public void verifier(Context baseContext) throws Throwable {
-            Object whiteListObject = getWhiteListObject(baseContext, WHITE_LIST);
+            Object receiverResourceObject = getReceiverResourceObject(baseContext);
+            Object whiteListObject = getWhiteListObject(receiverResourceObject, WHITE_LIST);
             if (whiteListObject instanceof String[]) {
                 String[] whiteList = (String[]) whiteListObject;
                 List<String> newWhiteList = new ArrayList<>();
                 newWhiteList.add(baseContext.getPackageName());
                 Collections.addAll(newWhiteList, whiteList);
-                FieldUtils.writeField(whiteListObject, WHITE_LIST, newWhiteList.toArray(new String[newWhiteList.size()]));
+                FieldUtils.writeField(receiverResourceObject, WHITE_LIST, newWhiteList.toArray(new String[newWhiteList.size()]));
             } else {
-                Object receiverResourceObject = getReceiverResourceObject(baseContext);
                 if (null != receiverResourceObject) {
                     FieldUtils.writeField(receiverResourceObject, "mResourceConfig", null);
                 }
@@ -110,8 +110,11 @@ public class LoadedApkHuaWei {
         }
 
         Object getWhiteListObject(Context baseContext, String whiteList) {
+            return getWhiteListObject(getReceiverResourceObject(baseContext), whiteList);
+        }
+
+        private Object getWhiteListObject(Object receiverResourceObject, String whiteList) {
             try {
-                Object receiverResourceObject = getReceiverResourceObject(baseContext);
                 if (null != receiverResourceObject) {
                     return FieldUtils.readField(receiverResourceObject, whiteList);
                 }

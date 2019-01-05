@@ -11,9 +11,11 @@ import android.app.Application;
 
 public class SimpleApplication extends Application {
 
+    public static SimpleApplication INSTANCE;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        LoadedApkHuaWei.hookHuaWeiVerifier(this);
+        INSTANCE = this;
     }
 }

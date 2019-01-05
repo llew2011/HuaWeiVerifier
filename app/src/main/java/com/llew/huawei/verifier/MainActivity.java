@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * <br/><br/>
@@ -25,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void register(View view) {
-        for (int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 2000; i++) {
             IntentFilter filter = new IntentFilter();
-            filter.addAction("test index : " + i);
+            filter.addAction("hook index : " + i);
             registerReceiver(new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
@@ -35,5 +36,15 @@ public class MainActivity extends AppCompatActivity {
             }, filter);
             Log.e(getClass().getName(), "index：" + i);
         }
+    }
+
+    public void hook(View view) {
+        // LoadedApkHuaWei.hookHuaWeiVerifier(SimpleApplication.INSTANCE);
+        LoadedApkHuaWei.hookHuaWeiVerifier(SimpleApplication.INSTANCE, new LoadedApkHuaWei.TooManyBroadcastCallback() {
+            @Override
+            public void tooManyBroadcast(int currentIndex, int totalCount) {
+                Toast.makeText(getApplicationContext(), "最多只能注册" + totalCount + "个广播接收器", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

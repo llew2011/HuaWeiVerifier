@@ -5,7 +5,7 @@ Fix only the crash of `Register too many Broadcast Receivers` on Huawei's mobile
 ```gradle
 dependencies {
     // add dependencies
-    implementation 'com.llew.huawei:verifier:1.0.6'
+    implementation 'com.llew.huawei:verifier:1.1.0'
 }
 ```
 
@@ -16,6 +16,25 @@ public class SimpleApplication extends Application {
     public void onCreate() {
         super.onCreate();
         LoadedApkHuaWei.hookHuaWeiVerifier(this);
+    }
+}
+```
+##### or with callback like this:
+```java
+public class SimpleApplication extends Application {
+
+    public static SimpleApplication INSTANCE;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        INSTANCE = this;
+        LoadedApkHuaWei.hookHuaWeiVerifier(this, new LoadedApkHuaWei.TooManyBroadcastCallback() {
+            @Override
+            public void tooManyBroadcast(int currentIndex, int totalCount) {
+                Toast.makeText(SimpleApplication.INSTANCE, "too many broadcast registed " + totalCount, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
 ```

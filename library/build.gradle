@@ -31,7 +31,7 @@ dependencies {
 def webUrl = 'https://github.com/llew2011/HuaWeiVerifier'
 def gitUrl = 'https://github.com/llew2011/HuaWeiVerifier.git'
 def orgName = 'llew'
-def verName = '1.1.0'
+def verName = '1.1.1'
 def libName = 'verifier'
 def grpName = 'com.llew.huawei'
 def libDesc = 'Fix only the crash of Register too manager Broadcast Receivers on Huawei\'s mobile phone.'

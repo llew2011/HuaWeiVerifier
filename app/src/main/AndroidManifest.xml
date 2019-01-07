@@ -17,6 +17,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name="com.llew.huawei.verifier.CustomReceiver" android:permission="@string/app_name">
+            <intent-filter>
+                <action android:name="com.llew.huawei.verifier"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.llew.huawei.verifier.SimReceiver">
+            <intent-filter>
+                <action android:name="com.llew.huawei.test"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

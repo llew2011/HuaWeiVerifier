@@ -116,15 +116,22 @@ public final class LoadedApkHuaWei {
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 final String methodName = method.getName();
                 if (TextUtils.equals(REGISTER_RECEIVER, methodName)) {
-                    mCurrentBroadcastCount++;
-                    if (mCurrentBroadcastCount > MAX_BROADCAST_COUNT) {
+                    if (mCurrentBroadcastCount >= MAX_BROADCAST_COUNT) {
                         if (null != mCallback) {
                             mCallback.tooManyBroadcast(mCurrentBroadcastCount, MAX_BROADCAST_COUNT);
                         }
                         return null;
                     }
+                    mCurrentBroadcastCount++;
+                    if (null != mCallback) {
+                        mCallback.tooManyBroadcast(mCurrentBroadcastCount, MAX_BROADCAST_COUNT);
+                    }
                 } else if (TextUtils.equals(UNREGISTER_RECEIVER, methodName)) {
                     mCurrentBroadcastCount--;
+                    mCurrentBroadcastCount = mCurrentBroadcastCount < 0 ? 0 : mCurrentBroadcastCount;
+                    if (null != mCallback) {
+                        mCallback.tooManyBroadcast(mCurrentBroadcastCount, MAX_BROADCAST_COUNT);
+                    }
                 }
                 return method.invoke(mIActivityManagerObject, args);
             }
@@ -228,6 +235,6 @@ public final class LoadedApkHuaWei {
     }
 
     public interface TooManyBroadcastCallback {
-        void tooManyBroadcast(int currentIndex, int totalCount);
+        void tooManyBroadcast(int registedCount, int totalCount);
     }
 }

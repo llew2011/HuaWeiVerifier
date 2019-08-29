@@ -76,9 +76,8 @@ public final class LoadedApkHuaWei {
         @Override
         public boolean verifier(Context baseContext, TooManyBroadcastCallback callback) throws Throwable {
             final boolean verified = super.verifier(baseContext, callback);
-            if (verified) {
-                hookActivityManagerService(baseContext.getClassLoader(), callback);
-            }
+            Log.v(LoadedApkHuaWei.class.getSimpleName(), "verified: " + verified);
+            hookActivityManagerService(baseContext.getClassLoader(), callback);
             return verified;
         }
 
